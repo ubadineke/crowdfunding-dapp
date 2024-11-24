@@ -1,0 +1,224 @@
+{
+  "address": "BAAzMV36Q9Uy6Ygg7VTShxRYQeBhoTDTQK5T6UUekCzp",
+  "metadata": {
+    "name": "anchor_project",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "donate_to_campaign",
+      "discriminator": [11, 213, 34, 2, 196, 121, 15, 216],
+      "accounts": [
+        {
+          "name": "donor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "campaign.title",
+                "account": "Campaign"
+              },
+              {
+                "kind": "const",
+                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+              },
+              {
+                "kind": "account",
+                "path": "campaign.creator",
+                "account": "Campaign"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_campaign",
+      "discriminator": [169, 88, 7, 6, 9, 165, 65, 132],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "const",
+                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "goal",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw_funds",
+      "discriminator": [241, 36, 29, 111, 208, 31, 104, 217],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "campaign.title",
+                "account": "Campaign"
+              },
+              {
+                "kind": "const",
+                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+              },
+              {
+                "kind": "account",
+                "path": "campaign.creator",
+                "account": "Campaign"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Campaign",
+      "discriminator": [50, 40, 49, 11, 157, 220, 229, 192]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TitleTooLong",
+      "msg": "Cannot initialize, title too long"
+    },
+    {
+      "code": 6001,
+      "name": "DescriptionTooLong",
+      "msg": "Cannot initialize, description too long"
+    },
+    {
+      "code": 6002,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds in donor account"
+    },
+    {
+      "code": 6003,
+      "name": "Overflow",
+      "msg": "Overflow occurred while adding to the campaign amount."
+    },
+    {
+      "code": 6004,
+      "name": "InvalidNonce",
+      "msg": "Nonce provided doesn't match current state."
+    },
+    {
+      "code": 6005,
+      "name": "AmountRaisedNotEnough",
+      "msg": "Amount raised not up to requested."
+    },
+    {
+      "code": 6006,
+      "name": "NoFundsRaisedYet",
+      "msg": "Amount raised currently is 0"
+    },
+    {
+      "code": 6007,
+      "name": "MissingBump",
+      "msg": "Bump value is missing."
+    }
+  ],
+  "types": [
+    {
+      "name": "Campaign",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "goal",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
