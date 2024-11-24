@@ -16,6 +16,8 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
+import { AnchorProject } from 'anchor/idlType';
+import { setProvider } from '@coral-xyz/anchor';
 
 export const HomeView: FC = ({}) => {
   const wallet = useWallet();
@@ -24,14 +26,18 @@ export const HomeView: FC = ({}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [program, setProgram] = useState<Program | null>(null);
+  const [program, setProgram] = useState<Program<AnchorProject> | null>(null);
   const [programId, setProgramId] = useState<PublicKey | null>(null);
+
+  const idl_string = JSON.stringify(idl);
+  const idl_object = JSON.parse(idl_string);
+  // const
 
   useEffect(() => {
     if (wallet.connected && wallet.publicKey) {
-      const provider = new AnchorProvider(connection, wallet as any, {});
-      const program = new Program(idl as Idl, provider);
-      const { programId } = program;
+      const provider = new AnchorProvider(connection, wallet, AnchorProvider.defaultOptions());
+      const program = new Program<AnchorProject>(idl_object, provider);
+      const programId = new PublicKey(idl.address);
       setProgram(program);
       setProgramId(programId);
     }
@@ -77,9 +83,7 @@ export const HomeView: FC = ({}) => {
         })
         .instruction();
 
-      const instructions = [
-        initializeCampaignInstruction,
-      ];
+      const instructions = [initializeCampaignInstruction];
 
       // Get the lates block hash to use on our transaction and confirmation
       let latestBlockhash = await connection.getLatestBlockhash();
@@ -141,7 +145,7 @@ export const HomeView: FC = ({}) => {
           onClose={closeModal}
           onSubmit={handleCreateCampaign} // Pass the onSubmit function
         />
-        {programId && <CampaignList programId={programId} />}
+        {programId && <CampaignList program={program} />}
       </div>
     </div>
   );

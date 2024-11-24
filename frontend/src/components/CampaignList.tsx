@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { fetchCampaignData } from '../utils/fetchCampaign';
 import { PublicKey } from '@solana/web3.js';
+import { Program } from '@coral-xyz/anchor';
+import { AnchorProject } from 'anchor/idlType';
 
 interface Campaign {
   title: string;
@@ -12,16 +14,16 @@ interface Campaign {
 }
 
 interface CampaignListProps {
-  programId: PublicKey; // The ID of your Solana program
+  program: Program<AnchorProject>; // The ID of your Solana program
 }
 
-export const CampaignList: React.FC<CampaignListProps> = ({ programId }) => {
+export const CampaignList: React.FC<CampaignListProps> = ({ program }) => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 
   const { connection } = useConnection();
   useEffect(() => {
     const fetchCampaigns = async () => {
-      const campaigns = await fetchCampaignData(connection, programId);
+      const campaigns = await fetchCampaignData(connection, program);
       setCampaigns(campaigns);
     };
 
