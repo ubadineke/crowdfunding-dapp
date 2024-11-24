@@ -4,8 +4,6 @@ import { AnchorProject } from '../target/types/anchor_project';
 import { PublicKey } from '@solana/web3.js';
 import { assert } from 'chai';
 
-// Configure the client to use the local cluster.
-
 const CAMPAIGN_SEED = 'CAMPAIGN_SEED';
 
 describe('Crowdfunding DApp', () => {
@@ -41,6 +39,14 @@ describe('Crowdfunding DApp', () => {
         .signers([testAcc])
         .rpc({ commitment: 'confirmed' });
       console.log('Your transaction signature', tx);
+
+      const accountInfo = await provider.connection.getAccountInfo(campaign_pkey);
+      console.log('Account Info', accountInfo);
+
+      const balance = accountInfo.lamports; // This will give you the balance in lamports
+      const acc_length = accountInfo.data.length;
+      console.log(`PDA Balance:, ${balance / 1000000000} SOL`);
+      console.log('Account data length:', acc_length);
     });
   });
 
@@ -245,16 +251,3 @@ function getDonationAddress(
     programID
   );
 }
-
-// const balance = await provider.connection.getBalance(testAcc.publicKey);
-
-// console.log('Balance of testAcc (in Lamports):', balance);
-
-// // Convert Lamports to SOL
-// const balanceInSol = balance / anchor.web3.LAMPORTS_PER_SOL;
-// console.log('Balance of testAcc (in SOL):', balanceInSol);
-
-// // Assert the balance (for testing purposes, optional)
-// if (balance === 0) {
-//   throw new Error('Balance is 0 after airdrop!');
-// }
