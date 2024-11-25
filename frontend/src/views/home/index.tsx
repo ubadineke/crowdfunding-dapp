@@ -126,8 +126,11 @@ export const HomeView: FC = ({}) => {
     <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
         <div className="flex items-end justify-end w-full py-2 px-3 rounded-lg">
-          <button className=" bg-gradient-to-tr from-purple-900 to-purple-700" onClick={openModal}>
-            + Create Camapign
+          <button
+            className="bg-gradient-to-tr from-purple-600 to-fuchsia-700 text-white rounded-2xl hover:from-purple-600 hover:to-indigo-800 py-3 px-6"
+            onClick={openModal}
+          >
+            + CREATE CAMPAIGN
           </button>
         </div>
         <div className="mt-6">

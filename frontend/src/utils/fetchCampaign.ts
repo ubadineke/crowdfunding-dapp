@@ -17,6 +17,7 @@ export const fetchCampaignData = async (
   program: Program<AnchorProject>
 ): Promise<Campaign[]> => {
   try {
+    const him = await program.account.campaign.all();
     const accounts = await connection.getParsedProgramAccounts(programID);
 
     const campaigns = await Promise.all(
@@ -25,7 +26,8 @@ export const fetchCampaignData = async (
         return {
           title: campaignData.title,
           description: campaignData.description,
-          goal: campaignData.goal.toNumber(), // Assuming `goal` is a BN (Big Number)
+          goal: campaignData.goal.toNumber() / 1000000000, // Assuming `goal` is a BN (Big Number)
+          raised: campaignData.raised.toNumber() / 1000000000,
         };
       })
     );

@@ -1,5 +1,5 @@
 {
-  "address": "BAAzMV36Q9Uy6Ygg7VTShxRYQeBhoTDTQK5T6UUekCzp",
+  "address": "NjeDq6yrcVzAXK4q2B8YgPmvFthVN965HvANDrWQV83",
   "metadata": {
     "name": "anchor_project",
     "version": "0.1.0",
@@ -9,7 +9,16 @@
   "instructions": [
     {
       "name": "donate_to_campaign",
-      "discriminator": [11, 213, 34, 2, 196, 121, 15, 216],
+      "discriminator": [
+        11,
+        213,
+        34,
+        2,
+        196,
+        121,
+        15,
+        216
+      ],
       "accounts": [
         {
           "name": "donor",
@@ -28,7 +37,21 @@
               },
               {
                 "kind": "const",
-                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+                "value": [
+                  67,
+                  65,
+                  77,
+                  80,
+                  65,
+                  73,
+                  71,
+                  78,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
               },
               {
                 "kind": "account",
@@ -52,7 +75,16 @@
     },
     {
       "name": "initialize_campaign",
-      "discriminator": [169, 88, 7, 6, 9, 165, 65, 132],
+      "discriminator": [
+        169,
+        88,
+        7,
+        6,
+        9,
+        165,
+        65,
+        132
+      ],
       "accounts": [
         {
           "name": "creator",
@@ -70,7 +102,21 @@
               },
               {
                 "kind": "const",
-                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+                "value": [
+                  67,
+                  65,
+                  77,
+                  80,
+                  65,
+                  73,
+                  71,
+                  78,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
               },
               {
                 "kind": "account",
@@ -101,7 +147,16 @@
     },
     {
       "name": "withdraw_funds",
-      "discriminator": [241, 36, 29, 111, 208, 31, 104, 217],
+      "discriminator": [
+        241,
+        36,
+        29,
+        111,
+        208,
+        31,
+        104,
+        217
+      ],
       "accounts": [
         {
           "name": "creator",
@@ -120,7 +175,21 @@
               },
               {
                 "kind": "const",
-                "value": [67, 65, 77, 80, 65, 73, 71, 78, 95, 83, 69, 69, 68]
+                "value": [
+                  67,
+                  65,
+                  77,
+                  80,
+                  65,
+                  73,
+                  71,
+                  78,
+                  95,
+                  83,
+                  69,
+                  69,
+                  68
+                ]
               },
               {
                 "kind": "account",
@@ -146,7 +215,16 @@
   "accounts": [
     {
       "name": "Campaign",
-      "discriminator": [50, 40, 49, 11, 157, 220, 229, 192]
+      "discriminator": [
+        50,
+        40,
+        49,
+        11,
+        157,
+        220,
+        229,
+        192
+      ]
     }
   ],
   "errors": [
@@ -211,6 +289,10 @@
           },
           {
             "name": "goal",
+            "type": "u64"
+          },
+          {
+            "name": "raised",
             "type": "u64"
           },
           {

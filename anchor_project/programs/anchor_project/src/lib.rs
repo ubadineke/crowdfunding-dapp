@@ -26,9 +26,6 @@ pub mod anchor_project {
         withdraw(ctx, amount)
     }
     
-    //view all campaigns
-    //donate to campaign
-    //withdraw funds
     //history of donations
 
 }
