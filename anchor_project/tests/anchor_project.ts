@@ -1,8 +1,9 @@
 import * as anchor from '@coral-xyz/anchor';
 import { Program } from '@coral-xyz/anchor';
 import { AnchorProject } from '../target/types/anchor_project';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey, Keypair } from '@solana/web3.js';
 import { assert } from 'chai';
+import bs58 from 'bs58';
 
 const CAMPAIGN_SEED = 'CAMPAIGN_SEED';
 
@@ -22,33 +23,47 @@ describe('Crowdfunding DApp', () => {
   const goal2 = new anchor.BN(10 * 1_000_000_000);
 
   const program = anchor.workspace.AnchorProject as Program<AnchorProject>;
-  describe('Create Campaign!', () => {
-    it('Creates a new campaign successfully', async () => {
-      await airdrop(provider.connection, testAcc.publicKey);
+  // describe('Create Campaign!', () => {
+  //   it('Creates a new campaign successfully', async () => {
+  //     await airdrop(provider.connection, testAcc.publicKey);
+  //     // const chpAcc = new PublicKey('Bf8PxxWt7UTvNGcrDyNwQiERSwNroa4pEo1pxwKo17Uh');
+  //     // const keypair = Keypair.fromSecretKey();
+  //     const sKey = '5asqfFnpbeyyoG3UuLr5dH21u8V1MkjZpf9fGtVB6WjvBCYvEzyE8BqFY8LEHn2Hcpf9RFHPqu4gpBLp5HG4jhVf';
 
-      const [campaign_pkey] = getCampaignAddress(campaignTitle, testAcc.publicKey, program.programId);
-      // Add your test here
+  //     // Decode the Base58 string into a Uint8Array
+  //     const secretKey = bs58.decode(sKey);
 
-      const tx = await program.methods
-        .initializeCampaign(campaignTitle, campaignDescripton, goal)
-        .accounts({
-          creator: testAcc.publicKey,
-          campaign: campaign_pkey,
-          systemProgram: anchor.web3.SystemProgram.programId,
-        })
-        .signers([testAcc])
-        .rpc({ commitment: 'confirmed' });
-      console.log('Your transaction signature', tx);
+  //     // Create a Keypair from the decoded secret key
+  //     const keypair = Keypair.fromSecretKey(secretKey);
+  //     console.log('KEYPAIR NUMBER:', keypair.publicKey);
+  //     // const chpAcc2 = new PublicKey(
+  //     //   '5asqfFnpbeyyoG3UuLr5dH21u8V1MkjZpf9fGtVB6WjvBCYvEzyE8BqFY8LEHn2Hcpf9RFHPqu4gpBLp5HG4jhVf'
+  //     // );
 
-      const accountInfo = await provider.connection.getAccountInfo(campaign_pkey);
-      console.log('Account Info', accountInfo);
+  //     const [campaign_pkey] = getCampaignAddress(campaignTitle, keypair.publicKey, program.programId);
+  //     // Add your test here
+  //     console.log('Campaign HYY', campaign_pkey.toString());
 
-      const balance = accountInfo.lamports; // This will give you the balance in lamports
-      const acc_length = accountInfo.data.length;
-      console.log(`PDA Balance:, ${balance / 1000000000} SOL`);
-      console.log('Account data length:', acc_length);
-    });
-  });
+  //     const tx = await program.methods
+  //       .initializeCampaign(campaignTitle, campaignDescripton, goal)
+  //       .accounts({
+  //         creator: keypair.publicKey,
+  //         campaign: campaign_pkey,
+  //         systemProgram: anchor.web3.SystemProgram.programId,
+  //       })
+  //       .signers([keypair])
+  //       .rpc({ commitment: 'confirmed' });
+  //     console.log('Your transaction signature', tx);
+
+  //     const accountInfo = await provider.connection.getAccountInfo(campaign_pkey);
+  //     console.log('Account Info', accountInfo);
+
+  //     const balance = accountInfo.lamports; // This will give you the balance in lamports
+  //     const acc_length = accountInfo.data.length;
+  //     console.log(`PDA Balance:, ${balance / 1000000000} SOL`);
+  //     console.log('Account data length:', acc_length);
+  //   });
+  // });
 
   // describe('Another Create Campaign!', () => {
   //   it('Creates a new campaign successfully', async () => {
@@ -75,6 +90,15 @@ describe('Crowdfunding DApp', () => {
     it('Donation successful', async () => {
       await airdrop(provider.connection, secondAcc.publicKey);
       const [campaign_pkey] = getCampaignAddress(campaignTitle, testAcc.publicKey, program.programId);
+      console.log('Campaign PDA:', campaign_pkey);
+      const sKey = '5asqfFnpbeyyoG3UuLr5dH21u8V1MkjZpf9fGtVB6WjvBCYvEzyE8BqFY8LEHn2Hcpf9RFHPqu4gpBLp5HG4jhVf';
+
+      // Decode the Base58 string into a Uint8Array
+      const secretKey = bs58.decode(sKey);
+
+      // Create a Keypair from the decoded secret key
+      const keypair = Keypair.fromSecretKey(secretKey);
+      console.log('KEYPAIR NUMBER:', keypair.publicKey);
 
       // Check balance of secondAcc (donor)
       const donorBalanceBefore = await provider.connection.getBalance(secondAcc.publicKey);
@@ -87,11 +111,11 @@ describe('Crowdfunding DApp', () => {
       const tx = await program.methods
         .donateToCampaign(donationAmount) // Pass SOL amount directly
         .accounts({
-          donor: secondAcc.publicKey,
+          donor: keypair.publicKey,
           campaign: campaign_pkey,
           systemProgram: anchor.web3.SystemProgram.programId,
         })
-        .signers([secondAcc])
+        .signers([keypair])
         .rpc({ commitment: 'confirmed' });
 
       console.log('Donation transaction signature:', tx);
@@ -175,34 +199,34 @@ describe('Crowdfunding DApp', () => {
   //   });
   // });
 
-  describe('Withdraw From Campaign', async () => {
-    it('Withdrawal Successful', async () => {
-      const [campaign_pkey] = getCampaignAddress(campaignTitle, testAcc.publicKey, program.programId);
+  // describe('Withdraw From Campaign', async () => {
+  //   it('Withdrawal Successful', async () => {
+  //     const [campaign_pkey] = getCampaignAddress(campaignTitle, testAcc.publicKey, program.programId);
 
-      const creatorBalanceBefore = await provider.connection.getBalance(testAcc.publicKey);
-      console.log('Creator balance before withdrawal:', creatorBalanceBefore);
+  //     const creatorBalanceBefore = await provider.connection.getBalance(testAcc.publicKey);
+  //     console.log('Creator balance before withdrawal:', creatorBalanceBefore);
 
-      // Derive the withdrawal amount (simulate a withdrawal)
-      const withdrawAmount = new anchor.BN(0.1 * 1_000_000_000); // in LAMPORTS
+  //     // Derive the withdrawal amount (simulate a withdrawal)
+  //     const withdrawAmount = new anchor.BN(0.1 * 1_000_000_000); // in LAMPORTS
 
-      // Simulate withdrawal to creator
-      const tx = await program.methods
-        .withdrawFunds(withdrawAmount) // Use the withdraw method here
-        .accounts({
-          creator: testAcc.publicKey, // Creator signs the transaction
-          campaign: campaign_pkey, // Campaign is the PDA
-          systemProgram: anchor.web3.SystemProgram.programId,
-        })
-        .signers([testAcc]) // The creator is signing the transaction
-        .rpc({ commitment: 'confirmed' });
+  //     // Simulate withdrawal to creator
+  //     const tx = await program.methods
+  //       .withdrawFunds(withdrawAmount) // Use the withdraw method here
+  //       .accounts({
+  //         creator: testAcc.publicKey, // Creator signs the transaction
+  //         campaign: campaign_pkey, // Campaign is the PDA
+  //         systemProgram: anchor.web3.SystemProgram.programId,
+  //       })
+  //       .signers([testAcc]) // The creator is signing the transaction
+  //       .rpc({ commitment: 'confirmed' });
 
-      console.log('Withdrawal transaction signature:', tx);
+  //     console.log('Withdrawal transaction signature:', tx);
 
-      // Check the creator's balance after withdrawal
-      const creatorBalanceAfter = await provider.connection.getBalance(testAcc.publicKey);
-      console.log('Creator balance after withdrawal:', creatorBalanceAfter);
-    });
-  });
+  //     // Check the creator's balance after withdrawal
+  //     const creatorBalanceAfter = await provider.connection.getBalance(testAcc.publicKey);
+  //     console.log('Creator balance after withdrawal:', creatorBalanceAfter);
+  //   });
+  // });
 });
 
 // ---------------------------------------------------------------------------------

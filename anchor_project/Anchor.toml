@@ -11,7 +11,7 @@ anchor_project = "NjeDq6yrcVzAXK4q2B8YgPmvFthVN965HvANDrWQV83"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "https://api.devnet.solana.com"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
