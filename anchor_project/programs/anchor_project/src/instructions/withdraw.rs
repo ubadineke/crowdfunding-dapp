@@ -31,6 +31,12 @@ pub fn withdraw(ctx: Context<Withdraw>, amount:u64) -> Result<()> {
         .checked_add(amount)
         .ok_or(CampaignError::Overflow)?;
 
+       // Update campaign's amount raised after successful transfer
+       campaign.raised = campaign
+       .raised
+       .checked_sub(amount)
+       .ok_or(CampaignError::Overflow)?;
+   
 
 Ok(())
 

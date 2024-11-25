@@ -18,7 +18,7 @@ describe('Crowdfunding DApp', () => {
   const goal = new anchor.BN(40 * 1_000_000_000);
 
   const campaignTitle2 = 'Fees Payment';
-  const campaignDescripton2 = 'Money for school fees.';
+  const campaignDescripton2 = 'Money for school fees';
   const goal2 = new anchor.BN(10 * 1_000_000_000);
 
   const program = anchor.workspace.AnchorProject as Program<AnchorProject>;
@@ -234,6 +234,7 @@ async function fetchAllCampaigns(program) {
       title: campaign.account.title,
       description: campaign.account.description,
       goal: campaign.account.goal.toNumber(),
+      raised: campaign.account.raised.toNumber(),
       // bump: campaign.account.bump,
     }))
   );

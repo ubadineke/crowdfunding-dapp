@@ -29,6 +29,12 @@ pub fn donate(ctx: Context<Donate>,amount: u64) -> Result<()>{
         campaign.to_account_info()
       ])?;
 
+      campaign.raised = campaign
+      .raised
+      .checked_add(amount)
+      .ok_or(CampaignError::Overflow)?;
+
+
 Ok(())
 
 }

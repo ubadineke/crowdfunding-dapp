@@ -39,6 +39,7 @@ pub fn create_campaign(
   created_campaign.title = title;
   created_campaign.description = description;
   created_campaign.goal = goal;
+  created_campaign.raised = 0;
   created_campaign.bump = ctx.bumps.campaign;
 
 Ok(())
