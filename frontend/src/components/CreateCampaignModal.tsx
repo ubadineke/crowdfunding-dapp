@@ -31,7 +31,10 @@ export const CreateCampaignModal: FC<CreateCampaignModalProps> = ({ isOpen, onCl
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50" onClick={handleOverlayClick}>
+    <div
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-20"
+      onClick={handleOverlayClick}
+    >
       <div className="bg-gradient-to-br from-indigo-500 to-fuchsia-500 mt-10 p-6 rounded-lg max-w-lg w-full shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Create Campaign</h2>
         <form onSubmit={handleSubmit}>

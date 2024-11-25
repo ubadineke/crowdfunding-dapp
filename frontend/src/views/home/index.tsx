@@ -96,27 +96,19 @@ export const HomeView: FC = ({}) => {
       }).compileToLegacyMessage();
 
       // Create a new VersionedTransacction which supports legacy and v0
-      const transation = new VersionedTransaction(messageLegacy);
+      const transaction = new VersionedTransaction(messageLegacy);
 
       // Send transaction and await for signature
-      signature = await sendTransaction(transation, connection);
+      signature = await sendTransaction(transaction, connection, { skipPreflight: true });
 
       // Send transaction and await for signature
       await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
 
       console.log(signature);
       notify({ type: 'success', message: 'Transaction successful!', txid: signature });
-      const result = await createCampaign(title, description, amount, wallet, connection, program);
-
-      if (result.success) {
-        alert('Campaign created successfully!');
-      } else {
-        alert(result.error || 'Transaction failed.');
-      }
     } catch (error) {
       console.log(error);
       console.error('Error in creating campaign:', error);
-      // alert('Error creating campaign.');
     } finally {
       setIsSubmitting(false);
     }
