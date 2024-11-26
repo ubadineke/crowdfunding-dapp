@@ -4,17 +4,14 @@ import { fetchCampaignData } from '../utils/fetchCampaign';
 import { Program } from '@coral-xyz/anchor';
 import { AnchorProject } from '../anchor/idlType';
 import {
-  Keypair,
   SystemProgram,
   PublicKey,
-  Transaction,
   TransactionMessage,
   TransactionSignature,
   VersionedTransaction,
 } from '@solana/web3.js';
 import * as anchor from '@coral-xyz/anchor';
 import { notify } from 'utils/notifications';
-import idl from '../anchor/idl.json';
 
 interface Campaign {
   creator: PublicKey;
@@ -186,7 +183,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ program }) => {
               <div
                 className="bg-gradient-to-r from-indigo-500 to-fuchsia-500 h-2"
                 style={{
-                  width: `${(parseFloat(campaign.raised) / parseFloat(campaign.goal)) * 100}%`,
+                  width: `${(campaign.raised / campaign.goal) * 100}%`,
                 }}
               ></div>
             </div>
