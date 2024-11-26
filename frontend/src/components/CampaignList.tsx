@@ -20,8 +20,8 @@ interface Campaign {
   creator: PublicKey;
   title: string;
   description: string;
-  goal: string;
-  raised: string;
+  goal: number;
+  raised: number;
 }
 
 interface CampaignListProps {
