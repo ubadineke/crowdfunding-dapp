@@ -1,5 +1,5 @@
 {
-  "address": "NjeDq6yrcVzAXK4q2B8YgPmvFthVN965HvANDrWQV83",
+  "address": "57dPyNf83ezm5EZD6N36xZVpPTkDGJWgy5d8rGVp4qYW",
   "metadata": {
     "name": "anchor_project",
     "version": "0.1.0",
@@ -265,6 +265,11 @@
     },
     {
       "code": 6007,
+      "name": "UnauthorizedWithdrawal",
+      "msg": "Withdrawal not allowed! You don't own this campaign"
+    },
+    {
+      "code": 6008,
       "name": "MissingBump",
       "msg": "Bump value is missing."
     }

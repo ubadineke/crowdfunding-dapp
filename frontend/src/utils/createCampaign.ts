@@ -107,7 +107,7 @@ export const createCampaign = async (
     await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
 
     console.log(signature);
-    notify({ type: 'success', message: 'Transaction successful!', txid: signature });
+    notify({ type: 'success', message: 'Campaign creation successful!', txid: signature });
   } catch (error) {
     // console.error('Error creating campaign:', error);
     console.log(error);

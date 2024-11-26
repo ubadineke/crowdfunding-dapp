@@ -6,17 +6,24 @@ use crate::errors::*;
 pub fn withdraw(ctx: Context<Withdraw>, amount:u64) -> Result<()> {
   let campaign = &mut ctx.accounts.campaign;
   let creator = &ctx.accounts.creator;
-  let campaign_balance = campaign.to_account_info().lamports();
-  //Check if the amount to be withdrawn is not more than amount raised and also not equal to 0
-  require!(
-    campaign_balance > 0,
-    CampaignError::NoFundsRaisedYet
-  );
 
-  require!(
-    campaign_balance >= amount,
-    CampaignError::AmountRaisedNotEnough
-  );
+    //Only the creator of the program should be able to withdraw
+    require!(
+      campaign.creator == *creator.key,
+      CampaignError::UnauthorizedWithdrawal
+    );
+
+    //Check if the amount to be withdrawn is not more than amount raised and also not equal to 0
+    require!(
+      campaign.raised > 0,
+      CampaignError::NoFundsRaisedYet
+    );
+
+    require!(
+      campaign.raised >= amount,
+      CampaignError::AmountRaisedNotEnough
+    );
+
     
     // Transfer lamports directly using try_borrow_mut_lamports()
     **campaign.to_account_info().try_borrow_mut_lamports()? = campaign

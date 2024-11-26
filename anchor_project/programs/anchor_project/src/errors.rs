@@ -16,6 +16,8 @@ pub enum CampaignError {
     AmountRaisedNotEnough,
     #[msg("Amount raised currently is 0")]
     NoFundsRaisedYet,
+    #[msg("Withdrawal not allowed! You don't own this campaign")]
+    UnauthorizedWithdrawal,
     #[msg("Bump value is missing.")]
     MissingBump,
 }

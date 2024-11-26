@@ -1,3 +1,5 @@
+![School of Solana](https://github.com/Ackee-Blockchain/school-of-solana/blob/master/.banner/banner.png?raw=true)
+
 # Crowdfunding Dapp
 
 A decentralized crowdfunding application built with Rust/Anchor and deployed on the Solana blockchain.

@@ -10,7 +10,7 @@ pub fn create_campaign(
   description: String,
   goal: u64,
 ) -> Result<()> {
-  let created_campaign = &mut ctx.accounts.campaign;
+  let campaign = &mut ctx.accounts.campaign;
 
   //Check Title Length
   require!(
@@ -27,20 +27,20 @@ pub fn create_campaign(
  // Initialize title byte array and copy data
   // let mut title_data = [0u8; TITLE_LENGTH];
   // title_data[..title.as_bytes().len()].copy_from_slice(title.as_bytes());
-  // created_campaign.title = title_data;
+  // campaign.title = title_data;
 
  // Initialize description byte array and copy data
   // let mut description_data = [0u8; DESCRIPTION_LENGTH];
   // description_data[..description.as_bytes().len()].copy_from_slice(description.as_bytes());
-  // created_campaign.description = description_data;
+  // campaign.description = description_data;
 
   //Setting other fields
-  created_campaign.creator = ctx.accounts.creator.key();
-  created_campaign.title = title;
-  created_campaign.description = description;
-  created_campaign.goal = goal;
-  created_campaign.raised = 0;
-  created_campaign.bump = ctx.bumps.campaign;
+  campaign.creator = ctx.accounts.creator.key();
+  campaign.title = title;
+  campaign.description = description;
+  campaign.goal = goal;
+  campaign.raised = 0;
+  campaign.bump = ctx.bumps.campaign;
 
 Ok(())
 }

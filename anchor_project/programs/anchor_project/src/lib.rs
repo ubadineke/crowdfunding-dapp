@@ -5,7 +5,7 @@ pub mod errors;
 pub mod instructions;
 pub mod states;
 
-declare_id!("NjeDq6yrcVzAXK4q2B8YgPmvFthVN965HvANDrWQV83");
+declare_id!("57dPyNf83ezm5EZD6N36xZVpPTkDGJWgy5d8rGVp4qYW");
 
 #[program]
 pub mod anchor_project {
