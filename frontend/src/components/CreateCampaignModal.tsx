@@ -7,11 +7,11 @@ interface CreateCampaignModalProps {
 }
 
 export const CreateCampaignModal: FC<CreateCampaignModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  if (!isOpen) return null;
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

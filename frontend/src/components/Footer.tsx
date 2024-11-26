@@ -11,6 +11,7 @@ export const Footer: FC = () => {
             <a
               href="https://twitter.com/ubadinekethedev"
               target="_blank"
+              rel="noreferrer"
               type="button"
               className="border-white text-secondary hover:text-white leading-normal hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >
@@ -33,6 +34,7 @@ export const Footer: FC = () => {
             <a
               href="https://github.com/ubadineke"
               target="_blank"
+              rel="noreferrer"
               type="button"
               className="border-white text-secondary hover:text-white leading-normal hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >

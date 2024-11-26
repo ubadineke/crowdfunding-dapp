@@ -47,7 +47,7 @@ export const CampaignList: React.FC<CampaignListProps> = ({ program }) => {
     };
 
     fetchCampaigns();
-  }, []);
+  }, [connection, program]);
 
   const getCampaignAddress = (title: string, creator: PublicKey, programId: PublicKey) => {
     return PublicKey.findProgramAddressSync(
