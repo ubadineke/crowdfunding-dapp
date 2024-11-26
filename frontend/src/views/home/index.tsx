@@ -79,6 +79,10 @@ export const HomeView: FC = ({}) => {
           creator: wallet.publicKey,
           campaign: campaignAddress,
           systemProgram: SystemProgram.programId,
+        } as {
+          creator: PublicKey;
+          campaign: PublicKey;
+          systemProgram: PublicKey;
         })
         .instruction();
 
