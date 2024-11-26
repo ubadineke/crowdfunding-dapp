@@ -3,7 +3,6 @@ import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { AnchorProvider, Program, web3, BN, Idl } from '@coral-xyz/anchor';
 import idl from '../../anchor/idl.json';
 import { CreateCampaignModal } from '../../components/CreateCampaignModal';
-import { createCampaign } from 'utils/createCampaign';
 import { notify } from '../../utils/notifications';
 import { CampaignList } from 'components/CampaignList';
 import * as anchor from '@coral-xyz/anchor';
