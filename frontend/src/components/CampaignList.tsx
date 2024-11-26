@@ -90,16 +90,20 @@ export const CampaignList: React.FC<CampaignListProps> = ({ program }) => {
     try {
       const [campaignAddress] = getCampaignAddress(title, creatorPubkey, program.programId);
 
-      const withdrawInstruction = await program.methods
+      const donateInstruction = await program.methods
         .donateToCampaign(new anchor.BN(donation * 1000000000))
         .accounts({
           donor: wallet.publicKey,
           campaign: campaignAddress,
           systemProgram: SystemProgram.programId,
+        } as {
+          donor: PublicKey;
+          campaign: PublicKey;
+          systemProgram: PublicKey;
         })
         .instruction();
 
-      const instructions = [withdrawInstruction];
+      const instructions = [donateInstruction];
       const latestBlockhash = await connection.getLatestBlockhash();
 
       const messageLegacy = new TransactionMessage({
@@ -132,16 +136,20 @@ export const CampaignList: React.FC<CampaignListProps> = ({ program }) => {
     try {
       const [campaignAddress] = getCampaignAddress(title, creatorPubkey, program.programId);
 
-      const donateInstruction = await program.methods
+      const withdrawInstruction = await program.methods
         .withdrawFunds(new anchor.BN(amount * 1000000000))
         .accounts({
           creator: wallet.publicKey,
           campaign: campaignAddress,
           systemProgram: SystemProgram.programId,
+        } as {
+          creator: PublicKey;
+          campaign: PublicKey;
+          systemProgram: PublicKey;
         })
         .instruction();
 
-      const instructions = [donateInstruction];
+      const instructions = [withdrawInstruction];
       const latestBlockhash = await connection.getLatestBlockhash();
 
       const messageLegacy = new TransactionMessage({
