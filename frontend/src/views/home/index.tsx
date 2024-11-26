@@ -137,6 +137,7 @@ export const HomeView: FC = ({}) => {
           <p className="text-slate-500 text-2x1 leading-relaxed">Simple app for creating and donating to campaigns.</p>
           {/* <p className="text-slate-500 text-2x1 leading-relaxed">Full-stack Solana applications made easy.</p> */}
         </h4>
+        <h2 className="text-red-500 text-xl">Advised: Donate/withdraw in small amounts (e.g 0.1, 0.5)!!!</h2>
         {/* Modal Component */}
         <CreateCampaignModal
           isOpen={isModalOpen}

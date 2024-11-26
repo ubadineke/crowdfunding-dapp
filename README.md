@@ -66,8 +66,6 @@ anchor deploy
 
 ### Frontend
 
-Work in progress!
-
 View it live [here](https://crowdfunding-dapp-ruby.vercel.app/)!
 
 Best viewed on desktop
